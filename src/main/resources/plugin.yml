@@ -1,0 +1,3 @@
+name: DropMerge
+main: de.tomylobo.dropmerge.DropMerge
+version: ${project.version}
