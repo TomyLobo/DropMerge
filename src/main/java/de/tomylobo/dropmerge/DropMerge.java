@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class DropMerge extends JavaPlugin implements Runnable {
+	private static final int DELAY_MERGE_TICKS = 40;
 	private static final int NUM_CHECKED_PER_TICK = 1;
 	private static final int CHECK_DISTANCE = 1;
 
@@ -60,7 +61,7 @@ public class DropMerge extends JavaPlugin implements Runnable {
 				continue;
 			}
 
-			if (item.getTicksLived() < 40) {
+			if (item.getTicksLived() < DELAY_MERGE_TICKS) {
 				continue;
 			}
 
