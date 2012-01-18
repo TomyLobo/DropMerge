@@ -2,26 +2,22 @@ package de.tomylobo.dropmerge;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
-import org.bukkit.event.world.WorldListener;
-import org.bukkit.plugin.PluginManager;
 
-public class DropMergeWorldListener extends WorldListener {
+public class DropMergeWorldListener implements Listener {
 	DropMerge plugin;
 
 	public DropMergeWorldListener(DropMerge plugin) {
 		this.plugin = plugin;
 
-		PluginManager pm = plugin.getServer().getPluginManager();
-		pm.registerEvent(Type.CHUNK_LOAD, this, Priority.Monitor, plugin);
-		pm.registerEvent(Type.CHUNK_UNLOAD, this, Priority.Monitor, plugin);
+		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
-
-	@Override
+	@EventHandler(event = ChunkLoadEvent.class, priority = EventPriority.MONITOR)
 	public void onChunkLoad(ChunkLoadEvent event) {
 		for (Entity entity : event.getChunk().getEntities()) {
 			if (!(entity instanceof Item)) {
@@ -44,8 +40,8 @@ public class DropMergeWorldListener extends WorldListener {
 			plugin.items.add(item);
 		}
 	}
-	
-	@Override
+
+	@EventHandler(event = ChunkUnloadEvent.class, priority = EventPriority.MONITOR)
 	public void onChunkUnload(ChunkUnloadEvent event) {
 		for (Entity entity : event.getChunk().getEntities()) {
 			if (!(entity instanceof Item)) {
